@@ -13,7 +13,7 @@ BTN_FG = "#000000"
 
 TITLE_TEXT = "로또 번호 10세트 자동 생성기"
 
-# ===== 로또 생성 함수(10세트=====
+# 로또 생성 함수(본번호 + 보너스 10세트)
 def generate_lotto_sets():
     title.config(text=TITLE_TEXT)
     result_box.config(state="normal")
