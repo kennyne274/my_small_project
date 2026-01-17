@@ -21,6 +21,7 @@ root.geometry("630x530")
 root.config(bg=BG)
 root.resizable(False, False)
 
+# 버튼 클릭시 실행할 함수
 def date():
     cal_str = calendar.month(YEAR,MONTH)
     print(calendar.month(YEAR,MONTH))
@@ -33,7 +34,7 @@ def year():
     text.insert(tk.END, cal_year+"\n")
     text.insert(tk.END, "2026년 달력이 출력되었습니다\n")
 
-
+# 컴포넌트 배치
 label = tk.Label(text = "달력 출력 프로그램", bg = BG, font=("휴먼편지체", 12, "bold"))
 label.pack(pady=(20,5))
 
@@ -42,7 +43,6 @@ text_frame.pack()
 
 scrollbar = tk.Scrollbar(text_frame)
 scrollbar.pack(side="right", fill="y")
-
 
 text = tk.Text(text_frame, width= 70, height= 20, font=("휴먼편지체", 11, "bold"),yscrollcommand=scrollbar.set)
 text.pack(pady=(20))
@@ -56,4 +56,5 @@ btn = tk.Button(btn_frame, text="이번달 달력", width = 12, height= 2, bg=BG
 btn.grid(row=0, column=0)
 btn2 = tk.Button(btn_frame, text="올해의 달력", width = 12, height= 2, bg=BG, font=FONT, command=year)
 btn2.grid(row=0, column=1)
+# 창유지
 root.mainloop()
