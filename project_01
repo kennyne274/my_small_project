@@ -1,0 +1,75 @@
+# 현재 디렉토리에서 파일만 검색한 후 인코딩 후 텍스트에 출력하는 프로그램
+# 연습 용, 현재 제작 중. 아직 완성 안됨 
+
+from tkinter import *
+import os
+
+def file_list():
+    listbox.delete(0, END)
+    files = [f for f in os.listdir(".") if os.path.isfile(os.path.join(".", f))]  
+
+    for file in files:
+        listbox.insert(END, file)
+
+def delete():
+    listbox.delete(0, END)
+    text.delete(1.0, END)
+
+def ch():
+    selection = listbox.curselection()  
+    if not selection:
+        return
+    
+    index = selection[0]               
+    selected_file = listbox.get(index)  
+
+    entry.delete(0, END)                
+    entry.insert(0, selected_file)      
+
+def load_file():
+    filename = entry.get()       
+    if not os.path.isfile(filename): 
+        text.delete(1.0, END)
+        text.insert(END, "파일이 존재하지 않습니다.")
+        return
+
+    with open(filename, "r", encoding="utf-8") as f:  
+        content = f.read()
+
+    text.delete(1.0, END)          
+    text.insert(END, content)    
+  
+
+root = Tk()
+root.title("현재 디렉토리의 파일 검색")
+root.resizable(False, False)
+
+scrollbar = Scrollbar(root)
+scrollbar.grid(row=0, column=3, sticky='ns')
+listbox = Listbox(root)
+listbox.config(yscrollcommand=scrollbar.set)
+scrollbar.config(command=listbox.yview)
+
+label = Label(root, text="파일 목록")
+entry = Entry(root)
+
+scrollbar2 = Scrollbar(root)
+scrollbar2.grid(row=2, column=3, sticky='ns')
+text = Text(root)
+text.config(yscrollcommand=scrollbar2.set)
+scrollbar2.config(command=text.yview)
+
+btn = Button(root, text = "파일 선택", command=ch)
+btn1 = Button(root, text="파일 목록", command=file_list)
+btn2 = Button(root, text = "내용 출력", command=load_file)
+btn3 = Button(root, text = "내용 삭제", command=delete)
+listbox.grid(row=0, column=0, columnspan=3, sticky='ew')
+btn.grid(row=1, column=0,  sticky='ew')
+entry.grid(row=1, column=1, columnspan=2, sticky='ew')
+text.grid(row=2, column=0, columnspan=3, sticky='ew')
+btn1.grid(row=3, column=0, sticky='ew')
+btn2.grid(row=3, column=1, sticky='ew')
+btn3.grid(row=3, column=2, sticky='ew')
+
+
+root.mainloop()
