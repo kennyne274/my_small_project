@@ -37,8 +37,17 @@ def year():
 label = tk.Label(text = "달력 출력 프로그램", bg = BG, font=("휴먼편지체", 12, "bold"))
 label.pack(pady=(20,5))
 
-text = tk.Text(width= 70, height= 20, font=("휴먼편지체", 11, "bold"))
+text_frame = tk.Frame(root, bg=BG)
+text_frame.pack()
+
+scrollbar = tk.Scrollbar(text_frame)
+scrollbar.pack(side="right", fill="y")
+
+
+text = tk.Text(text_frame, width= 70, height= 20, font=("휴먼편지체", 11, "bold"),yscrollcommand=scrollbar.set)
 text.pack(pady=(20))
+
+scrollbar.config(command=text.yview)
 
 btn_frame = tk.Frame(root, bg="lightblue")
 btn_frame.pack(pady=10)
