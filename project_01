@@ -1,7 +1,8 @@
-# 현재 디렉토리에서 파일만 검색한 후 인코딩 후 텍스트에 출력하는 프로그램
-# 연습 용, 현재 제작 중. 아직 완성 안됨 
+# 현재 디렉토리에서 파일만 검색한 후 인코딩 후 텍스트에 출력하는 간단한 프로그램
+# 아직 작성 중, 연습용
 
 from tkinter import *
+from tkinter import messagebox
 import os
 
 def file_list():
@@ -32,13 +33,46 @@ def load_file():
         text.delete(1.0, END)
         text.insert(END, "파일이 존재하지 않습니다.")
         return
+    try:
+        with open(filename, "r", encoding="utf-8") as f:  
+            content = f.read()
 
-    with open(filename, "r", encoding="utf-8") as f:  
-        content = f.read()
+        text.delete(1.0, END)          
+        text.insert(END, content)    
+    except Exception as e:
+            text.delete(1.0, END)          
+            text.insert(END, f"{e}") 
 
-    text.delete(1.0, END)          
-    text.insert(END, content)    
-  
+def on_double_click(event):
+    ch()          # 리스트에서 선택 → Entry에 파일명
+    load_file()  
+
+def save_file():
+    filename = entry.get()
+
+    if not filename:
+        text.delete(1.0, END)
+        text.insert(END, "저장할 파일명이 없습니다.")
+        return
+
+    try:
+        content = text.get(1.0, END).rstrip()
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(content)
+
+        text.insert(END, "")
+    except Exception as e:
+        text.delete(1.0, END)
+        text.insert(END, f"저장 실패: {e}")
+   
+
+def copy_to_clipboard():
+    root.clipboard_clear()
+    content = text.get("1.0", END)
+    root.clipboard_append(content)
+    messagebox.showinfo("복사 완료", "클립보드로 복사 되었습니다")
+   
+
 
 root = Tk()
 root.title("현재 디렉토리의 파일 검색")
@@ -47,10 +81,10 @@ root.resizable(False, False)
 scrollbar = Scrollbar(root)
 scrollbar.grid(row=0, column=3, sticky='ns')
 listbox = Listbox(root)
+listbox.bind("<Double-Button-1>", on_double_click)
 listbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 
-label = Label(root, text="파일 목록")
 entry = Entry(root)
 
 scrollbar2 = Scrollbar(root)
@@ -59,17 +93,19 @@ text = Text(root)
 text.config(yscrollcommand=scrollbar2.set)
 scrollbar2.config(command=text.yview)
 
-btn = Button(root, text = "파일 선택", command=ch)
-btn1 = Button(root, text="파일 목록", command=file_list)
-btn2 = Button(root, text = "내용 출력", command=load_file)
-btn3 = Button(root, text = "내용 삭제", command=delete)
+btn = Button(root, text = "파일 목록", command=file_list)
+
+btn2 = Button(root, text = "내용 복사", command=copy_to_clipboard)
+btn4 = Button(root, text = "Reset", command=delete)
+btn3 = Button(root, text = "파일저장", command=save_file)
 listbox.grid(row=0, column=0, columnspan=3, sticky='ew')
 btn.grid(row=1, column=0,  sticky='ew')
 entry.grid(row=1, column=1, columnspan=2, sticky='ew')
+
 text.grid(row=2, column=0, columnspan=3, sticky='ew')
-btn1.grid(row=3, column=0, sticky='ew')
-btn2.grid(row=3, column=1, sticky='ew')
-btn3.grid(row=3, column=2, sticky='ew')
+btn2.grid(row=3, column=0, sticky='ew')
+btn3.grid(row=3, column=1, sticky='ew')
+btn4.grid(row=3, column=2, sticky='ew')
 
 
 root.mainloop()
