@@ -76,25 +76,44 @@ languages = {
     "힌디어": "hi"
 }
 
+languages2 = {  
+    "한국어": "ko",
+    "영어": "en",
+    "중국어(간체)": "zh-CN",
+    "중국어 (번체)": "zh-TW",
+    "일본어": "ja",
+    "프랑스어": "fr",
+    "독일어": "de",
+    "스페인어": "es",
+    "아랍어": "ar",
+    "이탈리아어": "it",
+    "러시아어": "ru",
+    "태국어": "th",
+    "폴란드어": "pl",
+    "히브리어": "he",
+    "베트남어": "vi",
+    "힌디어": "hi"
+}
 
 tk.Label(root, text="입력 언어").place(x=30, y=20)
 
-# 입력 언어 콤보박스 생성
+# 입력 언어 콤보박스 
 input_lang = ttk.Combobox(root, values=list((languages.keys())), state="readonly", width=22)
 input_lang.place(x=130, y=20)
 input_lang.set("자동 감지")
 
 tk.Label(root, text="출력 언어").place(x=30, y=60)
 
-# 출력 언어 콤보박스 생성
-output_lang = ttk.Combobox(root, values=list(languages.keys()), state="readonly", width=22)
+# 출력 언어 콤보박스
+output_lang = ttk.Combobox(root, values=list(languages2.keys()), state="readonly", width=22)
 output_lang.place(x=130, y=60)
 output_lang.set("한국어")
 
 
+
 tk.Label(root, text="번역할 텍스트").place(x=30, y=110)
 
-# 프레임 생성 및 배치
+
 input_frame = tk.Frame(root)
 input_frame.place(x=30, y=140)
 
@@ -103,8 +122,7 @@ input_text = tk.Text(
     input_frame,
     width=69,
     height=9,
-    font=("맑은 고딕", 11),
-    wrap="word"
+    font=("맑은 고딕", 11)
 )
 input_text.pack(side="left")
 # 입력창 스크롤바 생성 및 배치
@@ -124,10 +142,9 @@ output_text = tk.Text(
     width=69,
     height=9,
     font=("맑은 고딕", 11),
-    wrap="word"
+    wrap = "word"
 )
 output_text.pack(side="left")
-
 #출력창 스크롤바 생성 및 배치
 output_scroll = tk.Scrollbar(output_frame)
 output_scroll.pack(side="right", fill="y")
@@ -135,7 +152,8 @@ output_scroll.pack(side="right", fill="y")
 output_text.config(yscrollcommand=output_scroll.set)
 output_scroll.config(command=output_text.yview)
 
-# 번역, 리셋 버튼
+
+# 번역, 리셋 선택 버튼
 btn1 = tk.Button(root, text="번역", width=10, height=1, command=translate)
 btn1.place(x=220, y=575)
 btn2 = tk.Button(root, text="리셋", width=10, height=1, command=delete)
