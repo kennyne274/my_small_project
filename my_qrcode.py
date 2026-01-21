@@ -32,9 +32,7 @@ def generate_qr():
     qr_image_label.config(image=img_tk)
     qr_image_label.image = img_tk
 
-    qr_pil_image = qr.make_image(
-    fill_color=qr_color,
-    back_color="white")
+    qr_pil_image = qr.make_image(fill_color=qr_color,back_color="white")
 
 #QR 이미지 저장 
 def save_qr():
