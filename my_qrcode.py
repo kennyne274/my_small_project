@@ -1,3 +1,6 @@
+# pip install qrcode
+# pip install pillow
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -32,7 +35,7 @@ def generate_qr():
     qr_image_label.config(image=img_tk)
     qr_image_label.image = img_tk
 
-    qr_pil_image = qr.make_image(fill_color=qr_color,back_color="white")
+    qr_pil_image = qr.make_image(fill_color=qr_color, back_color="white")
 
 #QR 이미지 저장 
 def save_qr():
@@ -82,8 +85,8 @@ info_label = tk.Label(input_frame,text="* URL 또는 텍스트 내용 입력")
 info_label.place(x=5, y=5)
 
 
-readme_btn = tk.Button(input_frame, text="닫기", width=10, command=root.destroy)
-readme_btn.place(x=430, y=0)
+close_btn = tk.Button(input_frame, text="닫기", width=10, command=root.destroy)
+close_btn.place(x=430, y=0)
 
 # 텍스트 입력창
 input_text = tk.Text(input_frame)
@@ -118,8 +121,8 @@ qr_image_label.place(relx=0.5, rely=0.5, anchor="center")
 generate_btn = tk.Button(root, text="QR코드 생성",width=15, command=generate_qr)
 generate_btn.place(x=300, y=320)
 
-close_btn = tk.Button(root, text="지우기", width=13, command=delete)
-close_btn.place(x=430, y=320)
+delete_btn = tk.Button(root, text="지우기", width=13, command=delete)
+delete_btn.place(x=430, y=320)
 
 tk.Label(root,text="QR 코드 색상 선택").place(x=300, y=375)
 
@@ -143,4 +146,3 @@ file_combo = ttk.Combobox(
 file_combo.place(x=300, y=465)
 file_combo.set("PNG")
 
-root.mainloop()
