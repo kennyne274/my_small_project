@@ -43,8 +43,8 @@ def get_weather():
         res = requests.get(WEATHER_URL, params=params)
         items = res.json()["response"]["body"]["items"]["item"]
 
-        temp = "?"
-        sky = "?"
+        temp = ""
+        sky = ""
 
         for item in items:
             if item["category"] == "T1H":
