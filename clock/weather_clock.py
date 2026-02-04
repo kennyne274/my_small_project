@@ -1,6 +1,3 @@
-# 날씨와 시간을 표시하는 디지털 시계
-# 날씨 정보는 공공데이터 포털에서 API키를 발급받아 합니다.
-
 import tkinter as tk
 import requests
 from datetime import datetime
@@ -15,7 +12,7 @@ WEATHER_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltra
 NX = 60   # 서울 종로 기준
 NY = 127
 
-# 시계 폰트(디지털 폰트가 없으면 자동 변경)
+# 시계 폰트
 try:
     FONT_TIME = ("DS-Digital", 75)
     
@@ -28,7 +25,8 @@ except:
 def get_weather():
     now = datetime.now()
     base_date = now.strftime("%Y%m%d")
-    base_time = now.strftime("%H%M") 
+    minute = now.minute
+    base_time = now.strftime("%H") + ("00" if minute < 40 else "30")
 
     params = {
         "serviceKey": API_KEY,
@@ -65,7 +63,8 @@ def get_weather():
 
         return f"{temp}℃ / {sky_text}"
 
-    except:
+    except Exception as e:
+        print(e)
         return "날씨 정보 없음"
 
 
@@ -82,10 +81,10 @@ def update():
 
     root.after(1000, update)
 
-# 날씨 업데이트(한 시간에 한번)
+# 날씨 업데이트(30분에 한번)
 def update_weather():
     weather_label.config(text=get_weather())
-    root.after(60000, update_weather)
+    root.after(60000*3, update_weather)
 
 
 
