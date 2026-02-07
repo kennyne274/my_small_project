@@ -1,7 +1,7 @@
-#=======================================================
+#========================================================================
 # 네이버에서 뉴스를 검색해 헤드라인 15개를 가져오는 스크립트
-#=======================================================
-
+# 수집한 헤드라인은 날짜별로 폴더를 생성해 csv 파일로 저장 및 워드 클라우드 생성
+#========================================================================
 # 내장 라이브러리
 from datetime import datetime
 import csv
@@ -92,7 +92,7 @@ def collect_news(url):
 
 # 3. 워드클라우드 생성
 def create_wordcloud(text):
-    now = datetime.now().strftime("%Y%m%d_%H%M")
+    now = datetime.now()
 
     wc = WordCloud(
         font_path="malgun.ttf",  # 한글 폰트 (Windows)
@@ -105,9 +105,13 @@ def create_wordcloud(text):
         background_color="white"
     ).generate(text)
 
+    date_folder = now.strftime("%Y-%m-%d")
+    filename = now.strftime("%H%M")
+    filepath = os.path.join(date_folder, f"wordcloud{filename}.png")
+
     plt.imshow(wc)
     plt.axis("off")
-    plt.savefig(f"wordcloud_{now}.png", dpi=300)
+    plt.savefig(filepath, dpi=300)
     plt.show()
 
 
@@ -158,7 +162,7 @@ if __name__ == "__main__":
                 print("에러 발생", e)
             time.sleep(7200)
     except KeyboardInterrupt:
-            print("\n=================================")
-            print(" 프로그램을 안전하게 종료합니다")
-            print("=================================")
-       
+        print("\n=================================")
+        print(" 프로그램을 안전하게 종료합니다")
+        print("=================================")
+    
