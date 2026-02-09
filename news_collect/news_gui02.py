@@ -1,17 +1,19 @@
+# 표준 라이브러리
 import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
 import csv
 import os
 from tkinter import filedialog
+
+# 외부 라이브러리(설치필요)
 import requests
 from bs4 import BeautifulSoup
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
 
-# 뉴스 섹션
-
+# 뉴스 종류
 SECTION_MAP = {
     "정치": "100",
     "경제": "101",
@@ -191,10 +193,11 @@ main.pack(fill="both", expand=True)
 # =====================
 title_label = tk.Label(
     main,
-    text="네이버 뉴스 헤드라인 수집기",
-    font=("맑은 고딕", 16, "bold")
+    text="<<네이버 뉴스 헤드라인 수집기>>",
+    font=("Arial", 11, "bold"),
+    fg="gray"
 )
-title_label.pack(pady=(0, 20))
+title_label.pack(pady=(10, 20))
 
 # =====================
 # 설정 프레임
@@ -289,3 +292,4 @@ scrollbar.config(command=log_text.yview)
 
 
 root.mainloop()
+
