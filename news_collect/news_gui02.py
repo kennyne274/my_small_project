@@ -5,15 +5,16 @@ from datetime import datetime
 import csv
 import os
 from tkinter import filedialog
-
-# 외부 라이브러리(설치필요)
+# 외부 라이브러리
+# 설치 필요 : pip install requests beautifulsoup4 wordcloud matplotlib
 import requests
 from bs4 import BeautifulSoup
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
 
-# 뉴스 종류
+# 뉴스 섹션
+
 SECTION_MAP = {
     "정치": "100",
     "경제": "101",
@@ -101,6 +102,7 @@ def collection():
         status_label.config(text="섹션을 선택해주세요", fg="red")
         return
 
+    
     status_label.config(text="뉴스 수집 중...", fg="blue")
     root.update()   # UI 즉시 갱신
 
@@ -113,22 +115,22 @@ def collection():
         log_text.insert(tk.END, "→ 수집된 뉴스가 없습니다.\n")
         status_label.config(text="수집 실패", fg="red")
         return
+    
 
     # 텍스트 박스에 출력
-    log_text.insert(tk.END, f"[{section}] 섹션 뉴스 헤드라인 ({len(titles)}개)\n")
-    log_text.insert(tk.END, "─" * 50 + "\n")
+    log_text.insert(tk.END, f"[{section}] 섹션 뉴스 헤드라인 ({len(titles)}개)\n\n")
+    
 
     for i, title in enumerate(titles, 1):
         log_text.insert(tk.END, f"{i:2d}. {title}\n")
 
-    log_text.insert(tk.END, "\n" + "─" * 50 + "\n")
-    log_text.see(tk.END)           # 자동으로 맨 아래로 스크롤
+    log_text.see(tk.END)  # 자동으로 맨 아래로 스크롤
 
     # CSV 저장 & 워드클라우드 생성
     save_to_csv(titles)
     create_wordcloud(" ".join(titles))
-    my_folder = os.getcwd()
 
+    my_folder = os.getcwd()
     status_label.config(text=f"완료! {my_folder}에 파일 저장됨", fg="green")
 
 # 버튼 기능
@@ -137,7 +139,6 @@ def start():
 
 def exit_program():
     plt.close('all')               
-    root.quit()
     root.destroy()
 
 
@@ -219,6 +220,7 @@ extract_check = tk.Checkbutton(
     text="파일은 자동 생성, 저장됩니다",
     variable=extract_var
 )
+extract_var.set(True)
 extract_check.grid(row=1, column=1, pady=5, padx=40)
 
 # =====================
@@ -292,4 +294,3 @@ scrollbar.config(command=log_text.yview)
 
 
 root.mainloop()
-
