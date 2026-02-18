@@ -73,7 +73,7 @@ class SpaceWar():
 
         if event.key == pygame.K_F1:
             # F1 키를 누르면 풀스크린 화면으로 전환
-            self.screen = pygame.display.set_mode((1200, 800), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height), pygame.FULLSCREEN)
         if event.key == pygame.K_F2 or event.key == pygame.K_ESCAPE:
             self.screen = pygame.display.set_mode((1200, 800))
         if event.key == pygame.K_SPACE:
@@ -190,14 +190,7 @@ class SpaceWar():
             if enemy.check_edges():
                 self._change_fleet_direction()
                 break
-            
-    def _check_enemies_bottom(self):
-        """적이 화면 하단에 닿았는지 확인"""
-        screen_rect = self.screen.get_rect()
-        for enemy in self.enemies.sprites():
-            if enemy.rect.bottom >= screen_rect.bottom:
-                self._ship_hit()
-                break
+    
 
     # 적군 방향 전환
     def _change_fleet_direction(self):
